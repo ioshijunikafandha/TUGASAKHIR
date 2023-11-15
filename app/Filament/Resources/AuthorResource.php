@@ -2,35 +2,35 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PinjamResource\Pages;
-use App\Filament\Resources\PinjamResource\RelationManagers;
-use App\Models\Pinjam;
-use DateTime;
+use App\Filament\Resources\AuthorResource\Pages;
+use App\Filament\Resources\AuthorResource\RelationManagers;
+use App\Models\Author;
 use Filament\Forms;
-use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PinjamResource extends Resource
+class AuthorResource extends Resource
 {
-    protected static ?string $model = Pinjam::class;
+    protected static ?string $model = Author::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-arrow-down';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
+
+    protected static ?string $navigationlabel = 'author';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('borrowingID')->required(),
-                TextInput::make('bookID')->required(),
-                TextInput::make('memberID')->required(),
-                DateTimePicker::make('borrowingDate')->required(),
+                TextInput::make('name')->required(),
+                FileUpload::make('pict')->required()
             ]);
     }
 
@@ -38,10 +38,8 @@ class PinjamResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('borrowingID'),
-                TextColumn::make('bookID'),
-                TextColumn::make('memberID'),
-                TextColumn::make('borrowingDate'),
+                TextColumn::make('name')->searchable(),
+                ImageColumn::make('pict'),
             ])
             ->filters([
                 //
@@ -67,9 +65,9 @@ class PinjamResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPinjams::route('/'),
-            //'create' => Pages\CreatePinjam::route('/create'),
-            //'edit' => Pages\EditPinjam::route('/{record}/edit'),
+            'index' => Pages\ListAuthors::route('/'),
+            //'create' => Pages\CreateAuthor::route('/create'),
+            //'edit' => Pages\EditAuthor::route('/{record}/edit'),
         ];
     }    
 }

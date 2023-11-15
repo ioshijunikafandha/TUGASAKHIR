@@ -20,7 +20,7 @@ class PengembalianResource extends Resource
 {
     protected static ?string $model = Pengembalian::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';
 
     public static function form(Form $form): Form
     {
